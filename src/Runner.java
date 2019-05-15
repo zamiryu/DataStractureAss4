@@ -1,13 +1,6 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class Runner {
 
-	//BLABLABLA
-
-	//Arguments you program should expect:
+    //Arguments you program should expect:
 	//1. m1 (the size of the Bloom-Filter's table).
 	//2. m2 (the size of expected hash table with chaining).
 	//3. t (the value for BTree).
@@ -17,17 +10,18 @@ public class Runner {
 	public static void main(String[] args) {
 
 		//Create the Bloom Filter.
-		BloomFilter bloomFilter = contructBloomFilter(args[0]);
+		BloomFilter bloomFilter = contructBloomFilter("32");
 				
 		//Create the Hash Table.
-		HashTable hashTable = contructHashTable(args[1]);
+		HashTable hashTable = contructHashTable("32");
 
 		//Find the percentage of false-positives
-		String falsePositivesPercent = bloomFilter.getFalsePositivePercentage(hashTable, System.getProperty("user.dir")+"/requested_passwords.txt");
-
+		String falsePositivesPercent = bloomFilter.getFalsePositivePercentage(hashTable, System.getProperty("user.dir")+ "/requested_passwords.txt");
+		System.out.println(falsePositivesPercent);
 		//Find the number of rejected passwords
-		String rejectedPasswordsAmount = bloomFilter.getRejectedPasswordsAmount(System.getProperty("user.dir")+"/requested_passwords.txt");
-
+		String rejectedPasswordsAmount = bloomFilter.getRejectedPasswordsAmount(System.getProperty("user.dir")+ "/requested_passwords.txt");
+		System.out.println(rejectedPasswordsAmount);
+/*
 		//Create the B tree using the t value and the path to the bad_passwords file.
 		BTree btree = createTree(args[2]);
 
@@ -43,12 +37,12 @@ public class Runner {
 
 		//Create a file with the program's expected output
 		createOutputFile(falsePositivesPercent, rejectedPasswordsAmount, treeLayout, searchTime, treeLayoutAfterDeletions, System.getProperty("user.dir")+"/output.txt");
-	    
+*/
 	}
 	
 
 	private static BloomFilter contructBloomFilter(String m1) {
-		BloomFilter bloomFilter = new BloomFilter(m1, System.getProperty("user.dir")+"/hash_functions.txt");
+		BloomFilter bloomFilter = new BloomFilter(m1, System.getProperty("user.dir")+ "/hash_functions.txt");
 		//update the Bloom Filter's table with the bad passwords
 		bloomFilter.updateTable(System.getProperty("user.dir")+"/bad_passwords.txt");
 		return bloomFilter;
@@ -57,10 +51,10 @@ public class Runner {
 	private static HashTable contructHashTable(String m2) {
 		HashTable hashTable = new HashTable(m2);
 		//update the Hash Table with the bad passwords
-		hashTable.updateTable(System.getProperty("user.dir")+"/bad_passwords.txt");
+		hashTable.updateTable(System.getProperty("user.dir")+ "/bad_passwords.txt");
 		return hashTable;
 	}
-
+/*
 	// Create the BTree using the t value, and the friends file.
 	// Insert the bad passwords into the tree.
 	private static BTree createTree(String tVal) {
@@ -94,6 +88,6 @@ public class Runner {
 			e.printStackTrace();
 		}
 	}
-
+*/
 
 }
